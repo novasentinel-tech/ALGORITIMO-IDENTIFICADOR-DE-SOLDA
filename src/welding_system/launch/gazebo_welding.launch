@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- 
+        Launch file para simulação completa com Gazebo
+        Inicia o Gazebo, o robô simulado, e todos os nós de soldagem
+    -->
+    
+    <!-- Parâmetros -->
+    <arg name="gui" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="material" default="steel"/>
+    <arg name="verbose" default="false"/>
+    
+    <!-- Inicia o Gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="verbose" value="$(arg verbose)"/>
+        <!-- <arg name="world_name" value="$(find welding_system)/worlds/welding_workspace.world"/> -->
+    </include>
+    
+    <!-- Carrega modelo do robô (necessário ter URDF configurado) -->
+    <!-- Exemplo genérico - ajuste conforme seu robô -->
+    <!--
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find welding_system)/urdf/robot.urdf.xacro"/>
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -model robot -param robot_description 
+              -x 0 -y 0 -z 0" respawn="false" output="screen"/>
+    -->
+    
+    <!-- Inicia o sistema de soldagem (sem movimento real) -->
+    <include file="$(find welding_system)/launch/welding_system.launch">
+        <arg name="material" value="$(arg material)"/>
+        <arg name="simulation_mode" value="true"/>
+        <arg name="visualize" value="true"/>
+    </include>
+    
+    <!-- RViz para visualização -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find welding_system)/config/gazebo_welding.rviz" /> -->
+</launch>

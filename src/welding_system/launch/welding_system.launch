@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- 
+        Launch file principal para o sistema de soldagem
+        Inicia todos os nós necessários para a detecção e planejamento de solda
+    -->
+    
+    <!-- Parâmetros globais -->
+    <arg name="material" default="steel"/>
+    <arg name="simulation_mode" default="true"/>
+    <arg name="visualize" default="true"/>
+    <arg name="publish_rate" default="10"/>
+    <arg name="robot_name" default="manipulator"/>
+    
+    <!-- Configuração de logging -->
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}] [${node}]: ${message}"/>
+    
+    <!-- Nó de Publicação de Imagens -->
+    <node name="image_publisher" pkg="welding_system" type="image_publisher_node.py" output="screen">
+        <param name="publish_rate" value="$(arg publish_rate)"/>
+        <param name="image_source" value="simulated"/>
+        <!-- Opções: 'simulated', 'file', 'camera' -->
+        <!-- <param name="image_file" value="/path/to/image.jpg"/> -->
+        <!-- <param name="camera_id" value="0"/> -->
+    </node>
+    
+    <!-- Nó de Planejamento de Soldagem -->
+    <node name="welding_planner" pkg="welding_system" type="welding_planner_node.py" output="screen">
+        <param name="material" value="$(arg material)"/>
+        <param name="visualize" value="$(arg visualize)"/>
+        <param name="enable_logging" value="true"/>
+    </node>
+    
+    <!-- Nó de Execução de Movimento -->
+    <node name="movement_executor" pkg="welding_system" type="movement_executor_node.py" output="screen">
+        <param name="robot_name" value="$(arg robot_name)"/>
+        <param name="simulation_mode" value="$(arg simulation_mode)"/>
+        <param name="execute_movement" value="false"/>
+        <param name="planning_time" value="5.0"/>
+    </node>
+    
+    <!-- Opcional: RQT para monitoramento -->
+    <!-- <node name="rqt" pkg="rqt_gui" type="rqt_gui" /> -->
+    
+    <!-- Opcional: RViz para visualização 3D -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find welding_system)/config/welding.rviz" /> -->
+</launch>

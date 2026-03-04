@@ -1,0 +1,54 @@
+# ROS Build Files
+build/
+devel/
+install/
+*.pyc
+__pycache__/
+
+# Catkin specific
+CATKIN_IGNORE
+.catkin_tools/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python virtual environments
+venv/
+env/
+ENV/
+
+# Pytest
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Logs
+*.log
+logs/
+rosbag*.bag
+
+# Data files
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.pcd
+data/
+datasets/
+
+# Environment
+.env
+.env.local
+
+# OS
+*.tmp
+Thumbs.db
+
+# Test files
+test_results/

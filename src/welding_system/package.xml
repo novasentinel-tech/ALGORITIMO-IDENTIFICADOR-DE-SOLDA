@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>welding_system</name>
+  <version>1.0.0</version>
+  <description>Advanced Welding Joint Identification and Welding Process Planning System</description>
+
+  <maintainer email="welding-team@novasentinel.tech">Nova Sentinel Team</maintainer>
+  <license>GPL-3.0</license>
+
+  <url type="repository">https://github.com/novasentinel-tech/ALGORITIMO-IDENTIFICADOR-DE-SOLDA</url>
+  <author>Nova Sentinel Tech</author>
+
+  <!-- ROS Dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>moveit_core</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>moveit_core</exec_depend>
+  <exec_depend>moveit_ros_planning_interface</exec_depend>
+  <exec_depend>trajectory_msgs</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros_control</exec_depend>
+
+  <test_depend>rostest</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <architecture_independent/>
+  </export>
+</package>

@@ -1,0 +1,153 @@
+# Configuração do Sistema de Detecção e Planejamento de Soldagem
+# =============================================================
+
+# Parâmetros de Detecção de Juntas
+joint_detection:
+  # Limites de área do contorno (em pixels)
+  min_contour_area: 100
+  max_contour_area: 100000
+  
+  # Parâmetros de Detecção de Bordas (Canny)
+  canny_threshold1: 50
+  canny_threshold2: 150
+  
+  # Desfoque gaussiano para reduzir ruído
+  blur_kernel: 5
+  blur_sigma: 1.5
+  
+  # Confiança mínima de detecção (0-1)
+  min_confidence: 0.3
+
+# Parâmetros de Classificação
+classification:
+  # Razão de aspecto mínima para junta aberta (V-shaped)
+  open_joint_aspect_ratio: 1.2
+  
+  # Profundidade mínima para múltiplos passes (mm)
+  multi_pass_threshold: 15.0
+  
+  # Profundidade padrão por passe (mm)
+  depth_per_pass: 8.0
+
+# Parâmetros de Processo de Soldagem
+welding_processes:
+  # SMAW (Eletrodo Revestido)
+  SMAW:
+    voltage_range: [18, 22]
+    current_range: [70, 150]
+    travel_speed_range: [100, 200]
+    ideal_applications: ["root", "field_work", "pipeline"]
+  
+  # GTAW (TIG)
+  GTAW:
+    voltage_range: [12, 18]
+    current_range: [80, 200]
+    travel_speed_range: [80, 150]
+    ideal_applications: ["root", "precision", "thin_materials"]
+  
+  # GMAW (MIG/MAG)
+  GMAW:
+    voltage_range: [18, 28]
+    current_range: [150, 300]
+    travel_speed_range: [250, 400]
+    ideal_applications: ["fill", "cap", "production"]
+  
+  # FCAW (Arame Tubular)
+  FCAW:
+    voltage_range: [22, 28]
+    current_range: [180, 350]
+    travel_speed_range: [300, 450]
+    ideal_applications: ["fill", "heavy_sections"]
+
+# Ângulos da Tocha
+torch_angles:
+  root_pass: 90      # Perpendicular para penetração
+  fill_pass: 45      # Ângulo tradicional
+  cap_pass: 30       # Ângulo mais raso para acabamento
+
+# Parâmetros de Câmera
+camera:
+  # Resolução
+  width: 640
+  height: 480
+  
+  # Taxa de publicação (Hz)
+  publish_rate: 10
+  
+  # Modo de fonte de imagem
+  # Opções: "simulated", "file", "camera"
+  image_source: "simulated"
+  
+  # Parâmetros de câmera física (se usada)
+  focal_length: 500  # pixels
+  principal_point_x: 320
+  principal_point_y: 240
+
+# Parâmetros de Robô
+robot:
+  # Nome do grupo de movimento do MoveIt
+  manipulator_group: "manipulator"
+  
+  # Espaço de trabalho (mm)
+  workspace:
+    x_min: -1000
+    x_max: 1000
+    y_min: -1000
+    y_max: 1000
+    z_min: 0
+    z_max: 2000
+  
+  # Velocidades máximas
+  max_joint_velocity: 1.57  # rad/s
+  max_tcp_velocity: 500     # mm/s
+  
+  # Aceleração
+  max_acceleration: 1.0      # m/s²
+
+# Parâmetros de Planejamento
+planning:
+  # Tempo máximo para planejar (segundos)
+  planning_time: 5.0
+  
+  # Número de tentativas de planejamento
+  planning_attempts: 10
+  
+  # Tolerância de posição (metros)
+  position_tolerance: 0.01
+  
+  # Tolerância de orientação (radianos)
+  orientation_tolerance: 0.1
+
+# Materiais Suportados
+materials:
+  steel:
+    yield_strength: 250      # MPa
+    tensile_strength: 400    # MPa
+    base_process: "GMAW"
+    heat_treatment: true
+  
+  stainless_steel:
+    yield_strength: 170      # MPa
+    tensile_strength: 500    # MPa
+    base_process: "GTAW"
+    heat_treatment: true
+  
+  aluminum:
+    yield_strength: 90       # MPa
+    tensile_strength: 160    # MPa
+    base_process: "GMAW"
+    heat_treatment: false
+
+# Logging
+logging:
+  debug: false
+  save_images: true
+  log_directory: "/tmp/welding_logs"
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+
+# Visualização
+visualization:
+  enabled: true
+  display_confidence: true
+  display_parameters: true
+  window_name: "Welding Joint Detection"
